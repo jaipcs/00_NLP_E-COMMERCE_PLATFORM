@@ -14,24 +14,255 @@ from nltk.tokenize import word_tokenize
 
 st.set_page_config(
 
-    page_title="E-Commerce Sentiment Analyzer",
-    page_icon="🛒",
-    layout="wide"
+# ============================================================
+# CUSTOM CSS STYLING
+# ============================================================
+
+st.markdown(
+
+    """
+    <style>
+
+    /* Main App Background */
+
+    .stApp {
+
+        background: linear-gradient(
+            to right,
+            #141E30,
+            #243B55
+        );
+
+        color: white;
+
+    }
+
+    /* Main Title */
+
+    h1 {
+
+        color: #00FFD1;
+
+        text-align: center;
+
+        font-size: 55px;
+
+        font-weight: bold;
+
+        margin-bottom: 10px;
+
+    }
+
+    /* Sub Headers */
+
+    h2, h3 {
+
+        color: #00FFD1;
+
+    }
+
+    /* Sidebar */
+
+    section[data-testid="stSidebar"] {
+
+        background-color: #0B1320;
+
+    }
+
+    /* Sidebar Text */
+
+    section[data-testid="stSidebar"] * {
+
+        color: white;
+
+    }
+
+    /* Buttons */
+
+    .stButton>button {
+
+        background-color: #00FFD1;
+
+        color: black;
+
+        border-radius: 12px;
+
+        height: 3.2em;
+
+        width: 100%;
+
+        font-size: 18px;
+
+        font-weight: bold;
+
+        border: none;
+
+        transition: 0.3s;
+
+    }
+
+    /* Button Hover */
+
+    .stButton>button:hover {
+
+        background-color: #00C9A7;
+
+        color: white;
+
+        transform: scale(1.02);
+
+    }
+
+    /* Text Area */
+
+    textarea {
+
+        border-radius: 12px !important;
+
+        border: 2px solid #00FFD1 !important;
+
+        background-color: rgba(255,255,255,0.05) !important;
+
+        color: white !important;
+
+    }
+
+    /* Metric Cards */
+
+    div[data-testid="metric-container"] {
+
+        background-color: rgba(255,255,255,0.08);
+
+        border: 1px solid rgba(255,255,255,0.2);
+
+        padding: 18px;
+
+        border-radius: 15px;
+
+        backdrop-filter: blur(10px);
+
+    }
+
+    /* Dataframe */
+
+    .stDataFrame {
+
+        border-radius: 12px;
+
+        overflow: hidden;
+
+    }
+
+    /* Success Message */
+
+    .stSuccess {
+
+        border-radius: 12px;
+
+    }
+
+    /* Error Message */
+
+    .stError {
+
+        border-radius: 12px;
+
+    }
+
+    /* Info Message */
+
+    .stInfo {
+
+        border-radius: 12px;
+
+    }
+
+    /* Code Block */
+
+    code {
+
+        color: #00FFD1 !important;
+
+    }
+
+    </style>
+    """,
+
+    unsafe_allow_html=True
 
 )
+
+)
+
+# ============================================================
+# CUSTOM TITLE
+# ============================================================
+
+st.markdown(
+
+    """
+    <h1>
+    🛒 E-Commerce Review Sentiment Analysis
+    </h1>
+    """,
+
+    unsafe_allow_html=True
+
+)
+
+st.markdown(
+
+    """
+    <div style='
+        text-align:center;
+        font-size:22px;
+        margin-bottom:35px;
+        color:white;
+    '>
+
+    Predict customer review sentiment using
+    NLP + Machine Learning 🚀
+
+    </div>
+    """,
+
+    unsafe_allow_html=True
+
+)
+
+
+
 
 # ============================================================
 # TITLE
 # ============================================================
 
-st.title("🛒 E-Commerce Review Sentiment Analysis")
-
-st.write(
+st.markdown(
 
     """
-    This app predicts customer review sentiment
-    using NLP and Machine Learning.
+    <h1>
+    🛒 E-Commerce Review Sentiment Analysis
+    </h1>
+    """,
+
+    unsafe_allow_html=True
+
+)
+
+st.markdown(
+
     """
+    <div style='text-align:center;
+                font-size:20px;
+                margin-bottom:30px;'>
+
+    Predict customer review sentiment using
+    NLP and Machine Learning 🚀
+
+    </div>
+    """,
+
+    unsafe_allow_html=True
 
 )
 
@@ -221,68 +452,77 @@ elif page == "Predict Sentiment":
 
     )
 
-    if st.button("Predict Sentiment"):
+if prediction == "positive":
 
-        if user_review.strip() == "":
+    st.markdown(
 
-            st.warning(
+        """
+        <div style="
+            background-color:#00C853;
+            padding:25px;
+            border-radius:15px;
+            text-align:center;
+            font-size:30px;
+            font-weight:bold;
+            color:white;
+        ">
 
-                "Please enter a review."
+        😊 POSITIVE REVIEW
 
-            )
+        </div>
+        """,
 
-        else:
+        unsafe_allow_html=True
 
-            cleaned_review = clean_text(
+    )
 
-                user_review
+elif prediction == "negative":
 
-            )
+    st.markdown(
 
-            vector_input = tfidf.transform(
+        """
+        <div style="
+            background-color:#D50000;
+            padding:25px;
+            border-radius:15px;
+            text-align:center;
+            font-size:30px;
+            font-weight:bold;
+            color:white;
+        ">
 
-                [cleaned_review]
+        😡 NEGATIVE REVIEW
 
-            )
+        </div>
+        """,
 
-            prediction = model.predict(
+        unsafe_allow_html=True
 
-                vector_input
+    )
 
-            )[0]
+else:
 
-            st.subheader("Prediction Result")
+    st.markdown(
 
-            if prediction == "positive":
+        """
+        <div style="
+            background-color:#2962FF;
+            padding:25px;
+            border-radius:15px;
+            text-align:center;
+            font-size:30px;
+            font-weight:bold;
+            color:white;
+        ">
 
-                st.success(
+        😐 NEUTRAL REVIEW
 
-                    "😊 Positive Review"
+        </div>
+        """,
 
-                )
+        unsafe_allow_html=True
 
-            elif prediction == "negative":
-
-                st.error(
-
-                    "😡 Negative Review"
-
-                )
-
-            else:
-
-                st.info(
-
-                    "😐 Neutral Review"
-
-                )
-
-            st.write(
-
-                "Predicted Sentiment:",
-                prediction
-
-            )
+    )
 
             st.subheader("Cleaned Review")
 
